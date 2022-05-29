@@ -1,6 +1,6 @@
 ## Overview
 
-`sound_trigger` is a program that calculates the root mean square the audio
+`sound_trigger` is a program that calculates the root mean square of the audio
 coming into your microphone, and can be used as a "noise detector".
 
 ```
