@@ -12,6 +12,10 @@ Usage: ./build/sound_trigger [-t threshold (0-255)] [-o output file]
 
 ## Dependencies
 
+In principle, you can use any C compiler and you don't have to use `make` as
+the build system, but `libasound2-dev` is required because we make use of the
+header file `alsa/asoundlib`.
+
 ```
 gcc
 libasound2-dev
@@ -32,6 +36,10 @@ make
 
 ## Example
 
+Here is an example that shows normal output without setting a threshold. The
+first number is the RMS amplitude, and the rest is the timestamp (indentation
+added by me).
+
 ```
 $ ./build/sound_trigger
   3.198968: 2022-05-28 18:58:53
@@ -48,6 +56,10 @@ $ ./build/sound_trigger
  99.047989: 2022-05-28 18:58:55
 101.734947: 2022-05-28 18:58:55
 ```
+
+This example demonstrates the "trigger" functionality. This could be useful if
+you want to perform an action when the ambient noise becomes too loud for some
+reason.
 
 ```
 $ ./build/sound_trigger -t 100 -S && echo "Threshold Reached!"
