@@ -1,3 +1,5 @@
+![Banner](https://s-christy.com/status-banner-service/sound-trigger/banner-slim.svg)
+
 ## Overview
 
 `sound_trigger` is a program that calculates the root mean square of the audio
@@ -66,3 +68,9 @@ $ ./build/sound_trigger -t 100 -S && echo "Threshold Reached!"
 134.172943: 2022-05-28 19:01:41
 Threshold Reached!
 ```
+
+## License
+
+This work is licensed under the GNU General Public License version 3 (GPLv3).
+
+[<img src="https://s-christy.com/status-banner-service/GPLv3_Logo.svg" width="150" />](https://www.gnu.org/licenses/gpl-3.0.en.html)
