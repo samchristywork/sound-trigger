@@ -9,4 +9,3 @@ build/sound_trigger: sound_trigger.c
 
 clean:
 	rm -rf build/
-
