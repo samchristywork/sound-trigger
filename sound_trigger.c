@@ -4,6 +4,10 @@
 #include <stdlib.h>
 #include <time.h>
 
+/*
+ * The usage message. This will print on error, or if the user selects the help
+ * flag.
+ */
 void usage(char *argv[]) {
   fprintf(stderr,
           "Usage: %s [-t threshold (0-255)] [-o output file]\n"
@@ -37,7 +41,9 @@ int main(int argc, char *argv[]) {
   snd_pcm_hw_params_t *hw_params;
   snd_pcm_t *capture_handle;
 
-  // Handle program arguments.
+  /*
+   * Handle program arguments.
+   */
   int opt;
   char *optstring = "hSo:t:";
   while ((opt = getopt(argc, argv, optstring)) != -1) {
@@ -64,7 +70,9 @@ int main(int argc, char *argv[]) {
     usage(argv);
   }
 
-  // Initialize the sound device.
+  /*
+   * Initialize the sound device.
+   */
   int err;
   err = snd_pcm_open(&capture_handle, device, SND_PCM_STREAM_CAPTURE, 0);
   alsa_assert(err < 0, "Cannot open audio device", snd_strerror(err));
@@ -99,20 +107,26 @@ int main(int argc, char *argv[]) {
   char *buffer = malloc(128 * snd_pcm_format_width(format) / 8);
   bzero(buffer, 128 * snd_pcm_format_width(format) / 8);
 
-  // Discard the first few samples.
+  /*
+   * Discard the first few samples.
+   */
   for (int j = 0; j < 32; j++) {
     err = snd_pcm_readi(capture_handle, buffer, buffer_frames);
     alsa_assert(err != buffer_frames, "Cannot read audio interface",
                 snd_strerror(err));
   }
 
-  // Main loop
+  /*
+   * Main loop
+   */
   int running = 1;
   while (running) {
     float rms = 0;
 
-    // Gather samples and populate an accumulator with the amplitude of each
-    // sample.
+    /*
+     * Gather samples and populate an accumulator with the amplitude of each
+     * sample.
+     */
     for (int j = 0; j < num_samples; j++) {
       err = snd_pcm_readi(capture_handle, buffer, buffer_frames);
       alsa_assert(err != buffer_frames, "Cannot read audio interface",
@@ -123,17 +137,23 @@ int main(int argc, char *argv[]) {
         rms += sample * sample;
       }
 
-      // Write to a file if specified.
+      /*
+       * Write to a file if specified.
+       */
       if (outfile) {
         fwrite(buffer, 1, buffer_frames, outfile);
       }
     }
 
-    // Get the root mean square of the samples
+    /*
+     * Get the root mean square of the samples.
+     */
     rms /= buffer_frames * num_samples;
     rms = sqrt(rms);
 
-    // Do something if a threshold value is reached.
+    /*
+     * Do something if a threshold value is reached.
+     */
     if (rms > threshold) {
       char buf[26];
       struct tm *tm_info;
@@ -145,7 +165,9 @@ int main(int argc, char *argv[]) {
 
       fflush(stdout);
 
-      // Exit if the `-S` option was specified.
+      /*
+       * Exit if the `-S` option was specified.
+       */
       if (exit_on_threshold) {
         running = 0;
       }
@@ -153,7 +175,9 @@ int main(int argc, char *argv[]) {
 
   }
 
-  // Cleanup
+  /*
+   * Cleanup.
+   */
   free(buffer);
   snd_pcm_close(capture_handle);
 }
