@@ -2,12 +2,23 @@
 
 ## Overview
 
-`sound_trigger` is a program that calculates the root mean square of the audio
-coming into your microphone, and can be used as a "noise detector".
+`sound_trigger` is a program that can calculate the root mean square of the
+audio coming into your microphone, and use that data to perform actions when an
+arbitrary threshold is reached. Thus, this program can be used as a "noise
+detector".
+
+## Usage
+
+Here is a synopsis of how a user can call this program. The threshold is between
+0 and 255 because that is the range of amplitude that can be picked up. The
+output file can be used to save raw sound data for replay.
+
+The program will not exit when a threshold is reached unless you use the
+<code>-S</code> flag.
 
 ```
 ./build/sound_trigger -h
-Usage: ./build/sound_trigger [-t threshold (0-255)] [-o output file]
+Usage: sound_trigger [-t threshold (0-255)] [-o output file]
  -h     Display this usage statement.
  -S     Exit when threshold hit.
 ```
@@ -22,18 +33,6 @@ header file `alsa/asoundlib`.
 gcc
 libasound2-dev
 make
-```
-
-## Build
-
-```
-make
-```
-
-## Run
-
-```
-./build/sound_trigger
 ```
 
 ## Example
