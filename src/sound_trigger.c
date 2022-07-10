@@ -45,16 +45,16 @@ int main(int argc, char *argv[]) {
    * Handle program arguments.
    */
   int opt;
-  char *optstring = "hSo:t:";
+  char *optstring = "Sd:f:hn:o:r:t:";
   while ((opt = getopt(argc, argv, optstring)) != -1) {
     if (opt == 'S') {
       exit_on_threshold = 1;
     }
+    if (opt == 'd') {
+      device = strdup(optarg);
+    }
     if (opt == 'h') {
       usage(argv);
-    }
-    if (opt == 't') {
-      threshold = atoi(optarg);
     }
     if (opt == 'o') {
       outfile = fopen(optarg, "wb");
@@ -62,6 +62,9 @@ int main(int argc, char *argv[]) {
         perror("fopen");
         usage(argv);
       }
+    }
+    if (opt == 't') {
+      threshold = atoi(optarg);
     }
   }
 
@@ -172,7 +175,6 @@ int main(int argc, char *argv[]) {
         running = 0;
       }
     }
-
   }
 
   /*
