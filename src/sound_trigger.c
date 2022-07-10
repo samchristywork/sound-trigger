@@ -82,6 +82,13 @@ int main(int argc, char *argv[]) {
     if (opt == 'h') {
       usage(argv);
     }
+    if (opt == 'n') {
+      num_samples = atoi(optarg);
+      if (!num_samples) {
+        fprintf(stderr, "Number of samples must be a number other than zero.\n");
+        usage(argv);
+      }
+    }
     if (opt == 'o') {
       outfile = fopen(optarg, "wb");
       if (outfile == 0) {
