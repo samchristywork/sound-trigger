@@ -4,6 +4,11 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define SELECT_FORMAT(x)         \
+  if (strcmp(optarg, #x) == 0) { \
+    format = x;                  \
+  }
+
 /*
  * The usage message. This will print on error, or if the user selects the help
  * flag.
@@ -52,6 +57,27 @@ int main(int argc, char *argv[]) {
     }
     if (opt == 'd') {
       device = strdup(optarg);
+    }
+    if (opt == 'f') {
+      /*
+       * NOTE: More formats may be available depending on your system. Check
+       * out /usr/include/alsa.
+       */
+      format = SND_PCM_FORMAT_UNKNOWN;
+      SELECT_FORMAT(SND_PCM_FORMAT_S8);
+      SELECT_FORMAT(SND_PCM_FORMAT_U8);
+      SELECT_FORMAT(SND_PCM_FORMAT_S16_LE);
+      SELECT_FORMAT(SND_PCM_FORMAT_S16_BE);
+      SELECT_FORMAT(SND_PCM_FORMAT_U16_LE);
+      SELECT_FORMAT(SND_PCM_FORMAT_U16_BE);
+      SELECT_FORMAT(SND_PCM_FORMAT_S24_LE);
+      SELECT_FORMAT(SND_PCM_FORMAT_S24_BE);
+      SELECT_FORMAT(SND_PCM_FORMAT_U24_LE);
+      SELECT_FORMAT(SND_PCM_FORMAT_U24_BE);
+      SELECT_FORMAT(SND_PCM_FORMAT_S32_LE);
+      SELECT_FORMAT(SND_PCM_FORMAT_S32_BE);
+      SELECT_FORMAT(SND_PCM_FORMAT_U32_LE);
+      SELECT_FORMAT(SND_PCM_FORMAT_U32_BE);
     }
     if (opt == 'h') {
       usage(argv);
