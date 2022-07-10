@@ -96,6 +96,13 @@ int main(int argc, char *argv[]) {
         usage(argv);
       }
     }
+    if (opt == 'r') {
+      rate = atoi(optarg);
+      if (!rate) {
+        fprintf(stderr, "Value for rate must be a number other than zero.\n");
+        usage(argv);
+      }
+    }
     if (opt == 't') {
       threshold = atoi(optarg);
     }
