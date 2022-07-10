@@ -16,8 +16,12 @@
 void usage(char *argv[]) {
   fprintf(stderr,
           "Usage: %s [-t threshold (0-255)] [-o output file]\n"
-          " -h\tDisplay this usage statement.\n"
           " -S\tExit when threshold hit.\n"
+          " -d\tThe device to read from.\n"
+          " -f\tThe format of the PCM audio (Ex: SND_PCM_FORMAT_U8).\n"
+          " -h\tDisplay this usage statement.\n"
+          " -n\tThe number of samples to read into the buffer.\n"
+          " -r\tThe rate in samples per second of the audio.\n"
           "",
           argv[0]);
   exit(EXIT_FAILURE);
