@@ -9,3 +9,5 @@ build/sound_trigger: src/sound_trigger.c
 
 clean:
 	rm -rf build/
+
+.PHONY: clean
